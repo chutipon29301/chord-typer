@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: planning
 stopped_at: Phase 1 complete
-last_updated: "2026-05-18T16:45:31.073Z"
+last_updated: "2026-05-18T16:45:37.568Z"
 last_activity: 2026-05-18 -- Phase 1 executed and verified
 progress:
   total_phases: 10
@@ -65,6 +65,8 @@ Recent decisions affecting current work:
 - Init: Evaluate chord on all-keys-released to prevent false positives
 - Init: NSPasteboard + Cmd-V injection for Thai Unicode output (CGEvent unreliable in Electron/terminal)
 - Init: xcodegen + Make for CLI-buildable project, no Xcode GUI required
+- P1: Entitlements properties must be declared in project.yml (xcodegen overwrites plist on generate)
+- P1: Test target requires GENERATE_INFOPLIST_FILE: YES for code signing
 
 ### Pending Todos
 
@@ -84,6 +86,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-18T17:00:00.000Z
+Last session: 2026-05-18T16:45:37.559Z
 Stopped at: Phase 1 complete
-Resume file: .planning/phases/01-project-scaffold/01-01-SUMMARY.md
+Resume file: None

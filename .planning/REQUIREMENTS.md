@@ -9,11 +9,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Scaffold
 
-- [ ] **SCAF-01**: Project uses xcodegen (project.yml) to generate .xcodeproj from CLI
-- [ ] **SCAF-02**: Makefile provides build, run, dmg, clean targets
-- [ ] **SCAF-03**: Folder structure matches spec (Sources/, Resources/, dictionaries/)
-- [ ] **SCAF-04**: Info.plist sets LSUIElement=YES (no Dock icon)
-- [ ] **SCAF-05**: Entitlements file includes accessibility permissions
+- [x] **SCAF-01**: Project uses xcodegen (project.yml) to generate .xcodeproj from CLI
+- [x] **SCAF-02**: Makefile provides build, run, dmg, clean targets
+- [x] **SCAF-03**: Folder structure matches spec (Sources/, Resources/, dictionaries/)
+- [x] **SCAF-04**: Info.plist sets LSUIElement=YES (no Dock icon)
+- [x] **SCAF-05**: Entitlements file includes accessibility permissions
 
 ### Menubar
 
@@ -122,11 +122,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCAF-01 | Phase 1 | Pending |
-| SCAF-02 | Phase 1 | Pending |
-| SCAF-03 | Phase 1 | Pending |
-| SCAF-04 | Phase 1 | Pending |
-| SCAF-05 | Phase 1 | Pending |
+| SCAF-01 | Phase 1 | Complete |
+| SCAF-02 | Phase 1 | Complete |
+| SCAF-03 | Phase 1 | Complete |
+| SCAF-04 | Phase 1 | Complete |
+| SCAF-05 | Phase 1 | Complete |
 | MENU-01 | Phase 2 | Pending |
 | MENU-02 | Phase 2 | Pending |
 | MENU-03 | Phase 2 | Pending |
