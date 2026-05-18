@@ -13,7 +13,7 @@ ChordTyper is built bottom-up in 10 phases: scaffold → menubar skeleton → ev
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Project Scaffold** - project.yml, Makefile, folder structure, Info.plist, entitlements
-- [ ] **Phase 2: Menubar Skeleton** - AppDelegate, menubar icon, menu items, quit
+- [x] **Phase 2: Menubar Skeleton** - AppDelegate, menubar icon, menu items, quit (completed 2026-05-18)
 - [ ] **Phase 3: CGEventTap** - setup, permissions check, keydown/keyup capture, pass-through
 - [ ] **Phase 4: Chord Detection** - timing window, key collection, sorted-key lookup
 - [ ] **Phase 5: Dictionary System** - JSON loading, hot-reload, English + Thai dict files
@@ -51,9 +51,9 @@ Plans:
   3. Clicking the icon shows a dropdown with toggle, dictionary items, Settings, Open Dictionary Folder, and Quit
   4. Clicking Quit terminates the app cleanly
   5. `make build && make test` passes (menu state unit tests)
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
-- [ ] 02-01-PLAN.md -- Menubar skeleton: full menu structure, icon states, toggles, unit tests, visual verification
+- [x] 02-01-PLAN.md -- Menubar skeleton: full menu structure, icon states, toggles, unit tests, visual verification
 **UI hint**: yes
 
 ### Phase 3: CGEventTap
@@ -172,7 +172,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold | 1/1 | Complete | 2026-05-18 |
-| 2. Menubar Skeleton | 0/1 | Planning | - |
+| 2. Menubar Skeleton | 1/1 | Complete   | 2026-05-18 |
 | 3. CGEventTap | 0/TBD | Not started | - |
 | 4. Chord Detection | 0/TBD | Not started | - |
 | 5. Dictionary System | 0/TBD | Not started | - |

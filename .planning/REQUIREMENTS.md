@@ -17,10 +17,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Menubar
 
-- [ ] **MENU-01**: App launches as menubar-only (no Dock icon, no main window)
-- [ ] **MENU-02**: Menubar icon uses SF Symbol (keyboard) with active/paused visual states
-- [ ] **MENU-03**: Menubar dropdown shows active/paused toggle, dictionary toggles, Settings, Open Dictionary Folder, Quit
-- [ ] **MENU-04**: User can quit app from menubar menu
+- [x] **MENU-01**: App launches as menubar-only (no Dock icon, no main window)
+- [x] **MENU-02**: Menubar icon uses SF Symbol (keyboard) with active/paused visual states
+- [x] **MENU-03**: Menubar dropdown shows active/paused toggle, dictionary toggles, Settings, Open Dictionary Folder, Quit
+- [x] **MENU-04**: User can quit app from menubar menu
 
 ### Event Tap
 
@@ -127,10 +127,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SCAF-03 | Phase 1 | Complete |
 | SCAF-04 | Phase 1 | Complete |
 | SCAF-05 | Phase 1 | Complete |
-| MENU-01 | Phase 2 | Pending |
-| MENU-02 | Phase 2 | Pending |
-| MENU-03 | Phase 2 | Pending |
-| MENU-04 | Phase 2 | Pending |
+| MENU-01 | Phase 2 | Complete |
+| MENU-02 | Phase 2 | Complete |
+| MENU-03 | Phase 2 | Complete |
+| MENU-04 | Phase 2 | Complete |
 | EVNT-01 | Phase 3 | Pending |
 | EVNT-02 | Phase 3 | Pending |
 | EVNT-03 | Phase 3 | Pending |
