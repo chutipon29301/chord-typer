@@ -12,7 +12,7 @@ ChordTyper is built bottom-up in 10 phases: scaffold → menubar skeleton → ev
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Project Scaffold** - project.yml, Makefile, folder structure, Info.plist, entitlements
+- [x] **Phase 1: Project Scaffold** - project.yml, Makefile, folder structure, Info.plist, entitlements
 - [ ] **Phase 2: Menubar Skeleton** - AppDelegate, menubar icon, menu items, quit
 - [ ] **Phase 3: CGEventTap** - setup, permissions check, keydown/keyup capture, pass-through
 - [ ] **Phase 4: Chord Detection** - timing window, key collection, sorted-key lookup
@@ -38,7 +38,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. Entitlements file declares com.apple.security.temporary-exception.accessibility permission
 **Plans:** 1 plan
 Plans:
-- [ ] 01-01-PLAN.md -- Project scaffold: all files, build/test verification, menubar launch check
+- [x] 01-01-PLAN.md -- Project scaffold: all files, build/test verification, menubar launch check
 
 ### Phase 2: Menubar Skeleton
 **Goal**: The app launches as a menubar-only app with an icon, a working dropdown menu, and a quit action
@@ -169,7 +169,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Scaffold | 0/1 | Planning complete | - |
+| 1. Project Scaffold | 1/1 | Complete | 2026-05-18 |
 | 2. Menubar Skeleton | 0/TBD | Not started | - |
 | 3. CGEventTap | 0/TBD | Not started | - |
 | 4. Chord Detection | 0/TBD | Not started | - |
