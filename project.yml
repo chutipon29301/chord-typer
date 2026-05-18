@@ -28,6 +28,8 @@ targets:
         NSAccessibilityUsageDescription: "ChordTyper needs Accessibility access to intercept keystrokes for chord detection."
     entitlements:
       path: Resources/ChordTyper.entitlements
+      properties:
+        com.apple.security.temporary-exception.accessibility: true
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: dev.chutipon.chordtyper
       CODE_SIGN_IDENTITY: "-"
@@ -43,3 +45,4 @@ targets:
       - target: ChordTyper
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: dev.chutipon.chordtypertests
+      GENERATE_INFOPLIST_FILE: YES
