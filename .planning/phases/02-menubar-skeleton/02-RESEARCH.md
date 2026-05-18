@@ -468,17 +468,19 @@ final class MenuStateTests: XCTestCase {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **`keyboard.badge.ellipsis` SF Symbol availability on macOS 13.0**
    - What we know: Symbol is documented in the SF Symbols library; minimum OS version not confirmed in this session
    - What's unclear: Whether it's available on macOS 13.0 specifically (vs 13.x or 14+)
    - Recommendation: The implementor should verify via SF Symbols 5 app or `NSImage(systemSymbolName:accessibilityDescription:)` availability check. Fallback: `keyboard.slash` or `keyboard` (Phase 1 used `keyboard` successfully — safe option).
+   - RESOLVED: Plan uses `keyboard.badge.ellipsis` as primary with documented fallback to `keyboard` or `keyboard.slash`. The `make build` step will catch compilation errors if the symbol name is invalid. Runtime availability will be verified during the human-verify checkpoint (Task 2).
 
 2. **Dictionary folder URL resolution in app bundle**
    - What we know: xcodegen `resources:` path copies the `dictionaries` folder into the bundle. `Bundle.main.resourceURL` points to the `Resources/` directory inside the `.app` bundle.
    - What's unclear: Whether the folder lands at `ChordTyper.app/Contents/Resources/dictionaries/` (macOS app bundle standard) and whether `Bundle.main.resourceURL?.appendingPathComponent("dictionaries")` or the `url(forResource:)` variant is more reliable.
    - Recommendation: Use `Bundle.main.resourceURL?.appendingPathComponent("dictionaries")` as primary; add `logger.error` on nil; the planner should include a verification task to confirm the path before wiring the action.
+   - RESOLVED: Plan uses `Bundle.main.resourceURL?.appendingPathComponent("dictionaries")` with optional chaining and `logger.error` fallback on nil. The human-verify checkpoint (Task 2, step 9) explicitly tests "Open Dictionary Folder" to confirm the path resolves correctly at runtime.
 
 ---
 
