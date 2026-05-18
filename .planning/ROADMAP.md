@@ -7,7 +7,7 @@ ChordTyper is built bottom-up in 10 phases: scaffold → menubar skeleton → ev
 ## Phases
 
 **Phase Numbering:**
-- Integer phases (1–10): Planned milestone work
+- Integer phases (1--10): Planned milestone work
 - Decimal phases (e.g. 2.1): Urgent insertions (marked INSERTED)
 
 Decimal phases appear between their surrounding integers in numeric order.
@@ -36,7 +36,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `make test` runs the XCTest suite and all tests pass (skeleton test target exists)
   4. The built app has LSUIElement=YES so it does not appear in the Dock
   5. Entitlements file declares com.apple.security.temporary-exception.accessibility permission
-**Plans**: TBD
+**Plans:** 1 plan
+Plans:
+- [ ] 01-01-PLAN.md -- Project scaffold: all files, build/test verification, menubar launch check
 
 ### Phase 2: Menubar Skeleton
 **Goal**: The app launches as a menubar-only app with an icon, a working dropdown menu, and a quit action
@@ -125,7 +127,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Requirements**: SETT-01, SETT-02, SETT-03, SETT-04, SETT-05
 **Success Criteria** (what must be TRUE):
   1. Settings opens as a standard macOS preferences window (not a floating panel)
-  2. Dragging the timing slider immediately changes the chord detection window (20–200ms range)
+  2. Dragging the timing slider immediately changes the chord detection window (20-200ms range)
   3. Toggling English or Thai dictionary disables chord detection for that language
   4. App Filter section shows blacklist/whitelist mode toggle and an app list with add/remove controls
   5. Shortcut section displays "Cmd+Shift+Space" as the current global toggle shortcut
@@ -163,11 +165,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Scaffold | 0/TBD | Not started | - |
+| 1. Project Scaffold | 0/1 | Planning complete | - |
 | 2. Menubar Skeleton | 0/TBD | Not started | - |
 | 3. CGEventTap | 0/TBD | Not started | - |
 | 4. Chord Detection | 0/TBD | Not started | - |
