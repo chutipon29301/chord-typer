@@ -32,11 +32,15 @@ struct ChordTyperApp: App {
             }
 
             Button("Open Dictionary Folder") {
-                if let url = Bundle.main.resourceURL?
-                                .appendingPathComponent("dictionaries") {
-                    NSWorkspace.shared.open(url)
+                guard let resourceURL = Bundle.main.resourceURL else {
+                    logger.error("Bundle resourceURL is nil — cannot locate dictionaries")
+                    return
+                }
+                let dictionariesURL = resourceURL.appendingPathComponent("dictionaries")
+                if FileManager.default.fileExists(atPath: dictionariesURL.path) {
+                    NSWorkspace.shared.open(dictionariesURL)
                 } else {
-                    logger.error("dictionaries directory not found in bundle")
+                    logger.warning("Dictionaries folder does not exist at expected path: \(dictionariesURL.path, privacy: .public)")
                 }
             }
 
