@@ -51,9 +51,10 @@ Plans:
   3. Clicking the icon shows a dropdown with toggle, dictionary items, Settings, Open Dictionary Folder, and Quit
   4. Clicking Quit terminates the app cleanly
   5. `make build && make test` passes (menu state unit tests)
-**Plans:** 1/1 plans complete
+**Plans:** 2 plans (1 complete, 1 gap closure)
 Plans:
 - [x] 02-01-PLAN.md -- Menubar skeleton: full menu structure, icon states, toggles, unit tests, visual verification
+- [ ] 02-02-PLAN.md -- Gap closure: add placeholder dictionaries and guard Open Dictionary Folder action
 **UI hint**: yes
 
 ### Phase 3: CGEventTap
@@ -172,7 +173,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold | 1/1 | Complete | 2026-05-18 |
-| 2. Menubar Skeleton | 1/1 | Complete   | 2026-05-18 |
+| 2. Menubar Skeleton | 1/2 | Gap closure | - |
 | 3. CGEventTap | 0/TBD | Not started | - |
 | 4. Chord Detection | 0/TBD | Not started | - |
 | 5. Dictionary System | 0/TBD | Not started | - |
