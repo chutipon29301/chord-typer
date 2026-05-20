@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 02-menubar-skeleton
 source: [02-01-SUMMARY.md]
 started: 2026-05-20T10:00:00Z
@@ -62,7 +62,13 @@ blocked: 0
   reason: "User reported: it does not open anything"
   severity: major
   test: 6
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "The dictionaries folder contains only .gitkeep (no real files). xcodebuild does not copy empty/gitkeep-only folders into the app bundle Resources. Bundle.main.resourceURL?.appendingPathComponent('dictionaries') resolves to a non-existent path, and NSWorkspace.shared.open(url) silently fails on non-existent paths."
+  artifacts:
+    - path: "Sources/ChordTyper/ChordTyperApp.swift"
+      issue: "NSWorkspace.shared.open(url) silently fails when dictionaries dir missing from bundle — no user feedback"
+    - path: "Resources/dictionaries/.gitkeep"
+      issue: "Only .gitkeep present — no real dictionary files, so folder not copied into bundle"
+  missing:
+    - "Add a placeholder dictionary file (e.g. english.json with minimal entries) so the folder gets copied into the bundle"
+    - "Add a fallback/error log or user alert when the dictionaries URL does not exist"
   debug_session: ""
