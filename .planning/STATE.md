@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 2 UI-SPEC approved
-last_updated: "2026-05-18T18:01:00.544Z"
-last_activity: 2026-05-18
+status: idle
+stopped_at: Phase 2 complete — all gaps closed
+last_updated: "2026-05-20T09:10:00Z"
+last_activity: 2026-05-20
 progress:
   total_phases: 10
   completed_phases: 2
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 3
+  completed_plans: 3
   percent: 20
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-18)
 
 **Core value:** Chord-based typing must reliably detect simultaneous keypresses and output the correct word, replacing the original keystrokes seamlessly
-**Current focus:** Phase 02 — menubar-skeleton
+**Current focus:** Phase 02 complete — ready for Phase 03 (CGEventTap)
 
 ## Current Position
 
-Phase: 02 (menubar-skeleton) — EXECUTING
-Plan: 1 of 1
-Status: Phase complete — ready for verification
-Last activity: 2026-05-18
+Phase: 02 (menubar-skeleton) — COMPLETE
+Plan: 2 of 2
+Status: All plans complete, all gaps closed
+Last activity: 2026-05-20
 
 Progress: [██████████] 100%
 
@@ -67,6 +67,7 @@ Recent decisions affecting current work:
 - Init: xcodegen + Make for CLI-buildable project, no Xcode GUI required
 - P1: Entitlements properties must be declared in project.yml (xcodegen overwrites plist on generate)
 - P1: Test target requires GENERATE_INFOPLIST_FILE: YES for code signing
+- P2: project.yml resources must use type: folder + buildPhase: resources for xcodegen to copy resource folders into bundle
 
 ### Pending Todos
 
@@ -86,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-18T18:01:00.535Z
-Stopped at: Phase 2 UI-SPEC approved
+Last session: 2026-05-20T09:10:00Z
+Stopped at: Phase 2 complete — all gaps closed
 Resume file: None
