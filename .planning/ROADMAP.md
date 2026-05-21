@@ -68,7 +68,10 @@ Plans:
   3. The tap re-enables itself automatically when disabled by timeout (kCGEventTapDisabledByTimeout)
   4. The tap recovers after the Mac sleeps and wakes (NSWorkspace notification)
   5. `make build && make test` passes (EventTapManager unit tests for re-enable logic)
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 03-01-PLAN.md -- EventTapManager + AppDelegate + adaptor wiring + unit tests + Makefile tccutil
+- [ ] 03-02-PLAN.md -- Human verification: transparent pass-through and permission UX
 
 ### Phase 4: Chord Detection
 **Goal**: The ChordEngine correctly detects simultaneous key presses within a configurable timing window and performs order-independent lookup
@@ -174,7 +177,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold | 1/1 | Complete | 2026-05-18 |
 | 2. Menubar Skeleton | 2/2 | Complete | 2026-05-20 |
-| 3. CGEventTap | 0/TBD | Not started | - |
+| 3. CGEventTap | 0/2 | Not started | - |
 | 4. Chord Detection | 0/TBD | Not started | - |
 | 5. Dictionary System | 0/TBD | Not started | - |
 | 6. Text Output | 0/TBD | Not started | - |
