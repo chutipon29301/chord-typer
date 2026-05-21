@@ -24,11 +24,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Event Tap
 
-- [ ] **EVNT-01**: CGEventTap created at session level (kCGSessionEventTap + kCGHeadInsertEventTap)
-- [ ] **EVNT-02**: Tap intercepts keyDown and keyUp events
-- [ ] **EVNT-03**: App checks AXIsProcessTrusted() and guides user to System Settings if permission missing
-- [ ] **EVNT-04**: Tap handles kCGEventTapDisabledByTimeout by re-enabling
-- [ ] **EVNT-05**: Tap recovers after sleep/wake via NSWorkspace notification
+- [x] **EVNT-01**: CGEventTap created at session level (kCGSessionEventTap + kCGHeadInsertEventTap)
+- [x] **EVNT-02**: Tap intercepts keyDown and keyUp events
+- [x] **EVNT-03**: App checks AXIsProcessTrusted() and guides user to System Settings if permission missing
+- [x] **EVNT-04**: Tap handles kCGEventTapDisabledByTimeout by re-enabling
+- [x] **EVNT-05**: Tap recovers after sleep/wake via NSWorkspace notification
 
 ### Chord Detection
 
@@ -131,11 +131,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MENU-02 | Phase 2 | Complete |
 | MENU-03 | Phase 2 | Complete |
 | MENU-04 | Phase 2 | Complete |
-| EVNT-01 | Phase 3 | Pending |
-| EVNT-02 | Phase 3 | Pending |
-| EVNT-03 | Phase 3 | Pending |
-| EVNT-04 | Phase 3 | Pending |
-| EVNT-05 | Phase 3 | Pending |
+| EVNT-01 | Phase 3 | Complete |
+| EVNT-02 | Phase 3 | Complete |
+| EVNT-03 | Phase 3 | Complete |
+| EVNT-04 | Phase 3 | Complete |
+| EVNT-05 | Phase 3 | Complete |
 | CHRD-01 | Phase 4 | Pending |
 | CHRD-02 | Phase 4 | Pending |
 | CHRD-03 | Phase 4 | Pending |

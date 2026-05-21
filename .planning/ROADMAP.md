@@ -81,11 +81,11 @@ Plans:
   4. The tap recovers after the Mac sleeps and wakes (NSWorkspace notification)
   5. `make build && make test` passes (EventTapManager unit tests for re-enable logic)
 
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 03-01-PLAN.md -- EventTapManager + AppDelegate + adaptor wiring + unit tests + Makefile tccutil
+- [x] 03-01-PLAN.md -- EventTapManager + AppDelegate + adaptor wiring + unit tests + Makefile tccutil
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -216,7 +216,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold | 1/1 | Complete | 2026-05-18 |
 | 2. Menubar Skeleton | 2/2 | Complete | 2026-05-20 |
-| 3. CGEventTap | 0/2 | Not started | - |
+| 3. CGEventTap | 1/2 | In Progress|  |
 | 4. Chord Detection | 0/TBD | Not started | - |
 | 5. Dictionary System | 0/TBD | Not started | - |
 | 6. Text Output | 0/TBD | Not started | - |
