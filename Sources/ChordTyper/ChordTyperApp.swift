@@ -6,6 +6,8 @@ private let logger = Logger(subsystem: "dev.chutipon.chordtyper", category: "App
 
 @main
 struct ChordTyperApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @AppStorage("chordTyperEnabled") private var chordTyperEnabled: Bool = true
     @AppStorage("englishEnabled")    private var englishEnabled: Bool = true
     @AppStorage("thaiEnabled")       private var thaiEnabled: Bool = true

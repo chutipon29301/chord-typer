@@ -12,6 +12,7 @@ build: generate
 	  -derivedDataPath $(BUILD_DIR) build
 
 run: build
+	tccutil reset Accessibility dev.chutipon.chordtyper 2>/dev/null || true
 	open "$(APP_PATH)"
 
 test: generate
