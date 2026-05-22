@@ -12,9 +12,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// EventTapManager instance — owns tap lifecycle (D-01).
     let eventTapManager = EventTapManager()
 
+    /// ChordEngine instance — detects simultaneous keypresses (D-12).
+    let chordEngine = ChordEngine()
+
     // MARK: - NSApplicationDelegate
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Wire ChordEngine into EventTapManager (D-12, D-13)
+        eventTapManager.eventHandler = { [weak self] event in
+            guard let self else { return event }
+            let result = self.chordEngine.process(event: event, type: event.type)
+            switch result {
+            case .passThrough(let e): return e
+            case .suppress:           return nil
+            case .chord(_, _):        return nil  // Phase 6 handles text output
+            }
+        }
+        logger.notice("ChordEngine wired into EventTapManager")
+
         // Set permission denied callback to show alert on main queue (D-05)
         eventTapManager.onPermissionDenied = { [weak self] in
             DispatchQueue.main.async {
