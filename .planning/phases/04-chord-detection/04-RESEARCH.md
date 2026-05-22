@@ -543,7 +543,7 @@ final class ChordEngineTests: XCTestCase {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Virtual keycode table correctness**
    - What we know: US QWERTY virtual keycodes are documented in IOKit `IOHIDUsageTables.h`
