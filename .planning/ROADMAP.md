@@ -110,7 +110,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 04-01-PLAN.md -- ChordEngine state machine (TDD): ChordResult enum, 3-state machine, timing window, sorted-alpha encoding, replay with re-entry guard, AppDelegate wiring, unit tests
+- [x] 04-01-PLAN.md -- ChordEngine state machine (TDD): ChordResult enum, 3-state machine, timing window, sorted-alpha encoding, replay with re-entry guard, AppDelegate wiring, unit tests
 
 **Wave 2**
 

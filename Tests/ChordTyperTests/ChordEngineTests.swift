@@ -19,6 +19,9 @@ final class ChordEngineTests: XCTestCase {
         engine.eventPoster = { [unowned self] event in
             self.postedEvents.append(event)
         }
+        // Use synchronous replay dispatch for deterministic test assertions (option-tab-deadlock fix).
+        // Production default is DispatchQueue.main.async; tests need inline execution.
+        engine.replayDispatcher = { $0() }
     }
 
     override func tearDown() {

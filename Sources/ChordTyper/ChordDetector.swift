@@ -43,11 +43,36 @@ enum ChordResult {
 /// Annotated `@unchecked Sendable` because thread safety is manually enforced (D-05).
 final class ChordEngine: @unchecked Sendable {
 
+    // MARK: - Constants
+
+    /// CGEvent userData value used to tag replayed events. Events with this marker
+    /// bypass chord processing entirely, preventing infinite replay loops.
+    static let replayMarker: Int64 = 0x4354_5250  // "CTRP" — ChordTyper Replay
+
+    /// Escape virtual keycode (used for kill switch detection).
+    private static let escapeKeycode: UInt16 = 53
+
     // MARK: - Public Configurable Properties
 
     /// Timing window in milliseconds. Keys pressed within this window of the
     /// first key are part of the same chord (CHRD-01, D-01). Default: 50ms.
     var timingWindowMs: TimeInterval = 50.0
+
+    /// When true, all events pass through without chord processing.
+    /// Set by the kill switch (triple-Escape) or circuit breaker.
+    /// Can be re-enabled by setting to false (e.g., from the menubar toggle).
+    var isDisabled: Bool = false
+
+    /// Time window for kill switch detection. Three Escape presses within this
+    /// window trigger emergency disable. Default: 1000ms.
+    var killSwitchWindowMs: TimeInterval = 1000.0
+
+    /// Circuit breaker: max events allowed within circuitBreakerWindowMs.
+    /// If exceeded, chord detection is auto-disabled. Default: 50 events.
+    var circuitBreakerThreshold: Int = 50
+
+    /// Circuit breaker time window in milliseconds. Default: 1000ms.
+    var circuitBreakerWindowMs: TimeInterval = 1000.0
 
     /// Injectable chord lookup closure (D-14). Defaults to no matches.
     /// Phase 5 replaces this with DictionaryManager. Tests inject a hardcoded dict.
@@ -56,6 +81,26 @@ final class ChordEngine: @unchecked Sendable {
     /// Injectable event poster (replaces direct CGEvent.post for testability).
     /// Default: posts via CGEvent.post at .cghidEventTap level.
     var eventPoster: (CGEvent) -> Void = { $0.post(tap: .cghidEventTap) }
+
+    /// Injectable replay dispatcher — controls HOW eventPoster is scheduled when
+    /// replaying buffered events after an abort or mismatch.
+    ///
+    /// Default (production): `DispatchQueue.main.async` — defers replay until AFTER
+    /// the current CGEventTap callback returns. This breaks the RunLoop/queue deadlock
+    /// that occurs when CGEvent.post is called synchronously from within the tap callback
+    /// (option-tab-deadlock fix).
+    ///
+    /// Tests: set to `{ $0() }` (synchronous, inline) so existing tests that check
+    /// `postedEvents` count immediately after `process()` continue to work without
+    /// needing async expectations.
+    ///
+    /// - Important: Do NOT change the production default back to synchronous dispatch.
+    ///   CGEvent.post blocks waiting for the RunLoop to deliver the re-injected event.
+    ///   The RunLoop is on the main thread which is executing the tap callback. Calling
+    ///   CGEvent.post synchronously FROM the tap callback causes a 10+ second freeze.
+    var replayDispatcher: (@escaping () -> Void) -> Void = { block in
+        DispatchQueue.main.async(execute: block)
+    }
 
     // MARK: - Private State
 
@@ -80,6 +125,12 @@ final class ChordEngine: @unchecked Sendable {
     /// OSAllocatedUnfairLock provides atomic access from any thread.
     private let _isReplayingLock = OSAllocatedUnfairLock<Bool>(initialState: false)
 
+    /// Kill switch: timestamps of recent Escape keyDown events.
+    private var _escapeTimestamps: [TimeInterval] = []
+
+    /// Circuit breaker: timestamps of recent events processed.
+    private var _eventTimestamps: [TimeInterval] = []
+
     // MARK: - Static Lookup Table
 
     /// Static US QWERTY keycode-to-character mapping for the 26 letter keys.
@@ -101,13 +152,70 @@ final class ChordEngine: @unchecked Sendable {
     }
 
     /// Process a keyboard event through the chord state machine.
-    /// Returns immediately if re-entry guard is set (prevents deadlock during replay).
+    /// Safety checks (in order): replay marker, disabled flag, re-entry guard,
+    /// kill switch, circuit breaker, then normal state machine processing.
     func process(event: CGEvent, type: CGEventType) -> ChordResult {
-        // Check re-entry flag WITHOUT acquiring queue — avoids deadlock during replay (Pitfall 1)
+        // 1. Replay marker check — tagged events bypass everything
+        if event.getIntegerValueField(.eventSourceUserData) == ChordEngine.replayMarker {
+            return .passThrough(event)
+        }
+
+        // 2. Disabled check — kill switch or circuit breaker tripped
+        if isDisabled {
+            return .passThrough(event)
+        }
+
+        // 3. Re-entry guard — checked BEFORE queue to avoid deadlock (Pitfall 1)
         if _isReplayingLock.withLock({ $0 }) {
             return .passThrough(event)
         }
-        return queue.sync { _process(event: event, type: type) }
+
+        return queue.sync { _processWithSafety(event: event, type: type) }
+    }
+
+    // MARK: - Safety Layer
+
+    private func _processWithSafety(event: CGEvent, type: CGEventType) -> ChordResult {
+        let now = ProcessInfo.processInfo.systemUptime
+        let keycode = UInt16(event.getIntegerValueField(.keyboardEventKeycode))
+
+        // Kill switch: track Escape keyDown events
+        if type == .keyDown && keycode == ChordEngine.escapeKeycode {
+            _escapeTimestamps.append(now)
+            // Prune old timestamps outside the window
+            let cutoff = now - killSwitchWindowMs / 1000.0
+            _escapeTimestamps.removeAll { $0 < cutoff }
+
+            if _escapeTimestamps.count >= 3 {
+                isDisabled = true
+                _escapeTimestamps = []
+                _reset()
+                logger.warning("ChordEngine: KILL SWITCH — triple-Escape detected, chord detection disabled")
+                return .passThrough(event)
+            }
+            // Escape always passes through (never part of a chord)
+            return .passThrough(event)
+        }
+        if type == .keyUp && keycode == ChordEngine.escapeKeycode {
+            return .passThrough(event)
+        }
+
+        // Circuit breaker: count non-Escape events
+        _eventTimestamps.append(now)
+        let cutoff = now - circuitBreakerWindowMs / 1000.0
+        _eventTimestamps.removeAll { $0 < cutoff }
+
+        if _eventTimestamps.count > circuitBreakerThreshold {
+            let count = _eventTimestamps.count
+            let window = circuitBreakerWindowMs
+            isDisabled = true
+            _eventTimestamps = []
+            _reset()
+            logger.warning("ChordEngine: CIRCUIT BREAKER — \(count) events in \(window)ms, chord detection disabled")
+            return .passThrough(event)
+        }
+
+        return _process(event: event, type: type)
     }
 
     // MARK: - Private State Machine
@@ -217,31 +325,48 @@ final class ChordEngine: @unchecked Sendable {
 
     // MARK: - Helpers
 
-    /// Abort chord collection: flush all buffered events as pass-through (D-03).
+    /// Abort chord collection: flush all buffered events via replayDispatcher (D-03).
+    ///
+    /// Fix for option-tab-deadlock: buffered events are posted via `replayDispatcher`,
+    /// which defaults to `DispatchQueue.main.async`. This defers CGEvent.post until
+    /// AFTER the tap callback returns, breaking the RunLoop/queue circular wait.
     private func _abortChord(passThrough event: CGEvent) -> ChordResult {
         let buffered = _bufferedEvents
         _cancelWindow()
         _reset()
 
-        // Post all previously buffered events (if any)
-        _isReplayingLock.withLock { $0 = true }
-        for ev in buffered {
-            eventPoster(ev)
+        // Schedule replay via replayDispatcher (async main in production, inline in tests).
+        // Do NOT call eventPoster synchronously here — see replayDispatcher doc comment.
+        replayDispatcher { [weak self] in
+            guard let self else { return }
+            self._isReplayingLock.withLock { $0 = true }
+            for ev in buffered {
+                // Mark replayed events so they bypass chord processing on re-entry
+                ev.setIntegerValueField(.eventSourceUserData, value: ChordEngine.replayMarker)
+                self.eventPoster(ev)
+            }
+            self._isReplayingLock.withLock { $0 = false }
         }
-        _isReplayingLock.withLock { $0 = false }
 
         logger.notice("ChordEngine: modifier detected, chord aborted, flushed \(buffered.count) events")
         return .passThrough(event)
     }
 
-    /// Replay all buffered events via eventPoster and reset state.
+    /// Replay all buffered events via replayDispatcher and reset state.
+    ///
+    /// Fix for option-tab-deadlock: same as _abortChord — deferred via replayDispatcher.
     private func _replayAndReset(_ events: [CGEvent]) {
         _reset()
-        _isReplayingLock.withLock { $0 = true }
-        for event in events {
-            eventPoster(event)
+        replayDispatcher { [weak self] in
+            guard let self else { return }
+            self._isReplayingLock.withLock { $0 = true }
+            for event in events {
+                // Mark replayed events so they bypass chord processing on re-entry
+                event.setIntegerValueField(.eventSourceUserData, value: ChordEngine.replayMarker)
+                self.eventPoster(event)
+            }
+            self._isReplayingLock.withLock { $0 = false }
         }
-        _isReplayingLock.withLock { $0 = false }
     }
 
     /// Open the timing window (D-08). Must only be called on the serial queue.

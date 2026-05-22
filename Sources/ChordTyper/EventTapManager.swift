@@ -165,6 +165,10 @@ final class EventTapManager: @unchecked Sendable {
             return nil
 
         case .keyDown, .keyUp:
+            // Replayed events (marked by ChordEngine) bypass the handler entirely
+            if event.getIntegerValueField(.eventSourceUserData) == ChordEngine.replayMarker {
+                return Unmanaged.passUnretained(event)
+            }
             let result = eventHandler?(event) ?? event
             return Unmanaged.passUnretained(result)
 
