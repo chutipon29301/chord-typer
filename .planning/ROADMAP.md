@@ -106,7 +106,15 @@ Plans:
   5. An unmatched chord replays all original keystrokes in order with no key loss
   6. `make build && make test` passes (ChordEngine unit tests covering all state machine paths)
 
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+**Wave 1**
+
+- [ ] 04-01-PLAN.md -- ChordEngine state machine (TDD): ChordResult enum, 3-state machine, timing window, sorted-alpha encoding, replay with re-entry guard, AppDelegate wiring, unit tests
+
+**Wave 2**
+
+- [ ] 04-02-PLAN.md -- Human verification: transparent pass-through, no deadlock, modifier shortcuts work
 
 ### Phase 5: Dictionary System
 
@@ -216,8 +224,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Project Scaffold | 1/1 | Complete | 2026-05-18 |
 | 2. Menubar Skeleton | 2/2 | Complete | 2026-05-20 |
-| 3. CGEventTap | 1/2 | In Progress|  |
-| 4. Chord Detection | 0/TBD | Not started | - |
+| 3. CGEventTap | 2/2 | Complete | 2026-05-22 |
+| 4. Chord Detection | 0/2 | Not started | - |
 | 5. Dictionary System | 0/TBD | Not started | - |
 | 6. Text Output | 0/TBD | Not started | - |
 | 7. Global Toggle | 0/TBD | Not started | - |
