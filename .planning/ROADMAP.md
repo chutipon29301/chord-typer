@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Project Scaffold** - project.yml, Makefile, folder structure, Info.plist, entitlements
 - [x] **Phase 2: Menubar Skeleton** - AppDelegate, menubar icon, menu items, quit (completed 2026-05-18)
-- [ ] **Phase 3: CGEventTap** - setup, permissions check, keydown/keyup capture, pass-through
+- [x] **Phase 3: CGEventTap** - setup, permissions check, keydown/keyup capture, pass-through (completed 2026-05-22)
 - [ ] **Phase 4: Chord Detection** - timing window, key collection, sorted-key lookup
 - [ ] **Phase 5: Dictionary System** - JSON loading, hot-reload, English + Thai dict files
 - [ ] **Phase 6: Text Output** - key suppression, word output, smart space logic
@@ -81,15 +81,15 @@ Plans:
   4. The tap recovers after the Mac sleeps and wakes (NSWorkspace notification)
   5. `make build && make test` passes (EventTapManager unit tests for re-enable logic)
 
-**Plans:** 1/2 plans executed
+**Plans:** 2 plans (complete)
 Plans:
 **Wave 1**
 
 - [x] 03-01-PLAN.md -- EventTapManager + AppDelegate + adaptor wiring + unit tests + Makefile tccutil
 
-**Wave 2** *(blocked on Wave 1 completion)*
+**Wave 2**
 
-- [ ] 03-02-PLAN.md -- Human verification: transparent pass-through and permission UX
+- [x] 03-02-PLAN.md -- Human verification: transparent pass-through and permission UX
 
 ### Phase 4: Chord Detection
 

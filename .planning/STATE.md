@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 3 context gathered
-last_updated: "2026-05-21T07:16:35.358Z"
-last_activity: 2026-05-21
+status: executing
+stopped_at: Phase 3 complete
+last_updated: "2026-05-22T03:38:00.000Z"
+last_activity: 2026-05-22 -- Phase 3 execution complete
 progress:
   total_phases: 10
-  completed_phases: 2
-  total_plans: 5
-  completed_plans: 4
-  percent: 20
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
+  percent: 30
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-18)
 
 **Core value:** Chord-based typing must reliably detect simultaneous keypresses and output the correct word, replacing the original keystrokes seamlessly
-**Current focus:** Phase 02 complete — ready for Phase 03 (CGEventTap)
+**Current focus:** Phase 03 complete — ready for Phase 04 (Chord Detection)
 
 ## Current Position
 
-Phase: 02 (menubar-skeleton) — COMPLETE
+Phase: 03 (cgeventtap) — COMPLETE
 Plan: 2 of 2
-Status: Phase complete — ready for verification
-Last activity: 2026-05-21
+Status: Phase complete
+Last activity: 2026-05-22
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [████████░░] 80%
 
 *Updated after each plan completion*
 | Phase 03-cgeventtap P01 | ~5 min | 2 tasks | 5 files |
+| Phase 03-cgeventtap P02 | ~15 min | 1 task (human verify) | 2 files |
 
 ## Accumulated Context
 
@@ -69,7 +70,9 @@ Recent decisions affecting current work:
 - P1: Entitlements properties must be declared in project.yml (xcodegen overwrites plist on generate)
 - P1: Test target requires GENERATE_INFOPLIST_FILE: YES for code signing
 - P2: project.yml resources must use type: folder + buildPhase: resources for xcodegen to copy resource folders into bundle
-- [Phase ?]: P3: Injectable closures for CGEventTap operations enable unit testing without TCC dependency
+- P3: Injectable closures for CGEventTap operations enable unit testing without TCC dependency
+- P3: Permission check requires both CGPreflightListenEventAccess() || AXIsProcessTrusted() — .defaultTap needs Accessibility, not Input Monitoring
+- P3: os.Logger .info level not persisted by macOS; use .notice for lifecycle messages
 
 ### Pending Todos
 
