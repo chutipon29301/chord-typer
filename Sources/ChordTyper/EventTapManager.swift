@@ -1,3 +1,4 @@
+import ApplicationServices
 import CoreGraphics
 import Foundation
 import os
@@ -35,9 +36,10 @@ final class EventTapManager: @unchecked Sendable {
 
     // MARK: - Injectable Dependencies (for testability)
 
-    /// Permission checker — defaults to CGPreflightListenEventAccess (D-07).
+    /// Permission checker — checks both Input Monitoring (CGPreflightListenEventAccess)
+    /// and Accessibility (AXIsProcessTrusted) since .defaultTap may require either (D-07, Pitfall 1).
     var permissionChecker: () -> Bool = {
-        CGPreflightListenEventAccess()
+        CGPreflightListenEventAccess() || AXIsProcessTrusted()
     }
 
     /// Tap creator — defaults to real CGEvent.tapCreate call.
@@ -133,7 +135,7 @@ final class EventTapManager: @unchecked Sendable {
         }
         tapEnabler(tap, true)
         tapState = .running
-        logger.info("CGEventTap installed and running")
+        logger.notice("CGEventTap installed and running")
     }
 
     /// Disable and remove the tap, release retained self reference.
@@ -149,7 +151,7 @@ final class EventTapManager: @unchecked Sendable {
         selfRetained?.release()
         selfRetained = nil
         tapState = .stopped
-        logger.info("CGEventTap destroyed")
+        logger.notice("CGEventTap destroyed")
     }
 
     /// Handle events from the C callback. Called on the RunLoop thread.
@@ -205,14 +207,14 @@ final class EventTapManager: @unchecked Sendable {
             if self.permissionChecker() {
                 self.pollTimer?.cancel()
                 self.pollTimer = nil
-                logger.info("Permission granted during polling — creating tap")
+                logger.notice("Permission granted during polling — creating tap")
                 DispatchQueue.main.async {
                     self.createTap()
                 }
             } else if self.pollCount >= 30 {
                 self.pollTimer?.cancel()
                 self.pollTimer = nil
-                logger.info("Permission polling timed out after ~60 seconds")
+                logger.notice("Permission polling timed out after ~60 seconds")
             }
         }
         timer.resume()

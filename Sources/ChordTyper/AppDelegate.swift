@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Register sleep/wake observer (D-10)
         registerSleepWakeObserver()
 
-        logger.info("Application launched — EventTapManager started")
+        logger.notice("Application launched — EventTapManager started")
     }
 
     // MARK: - Permission Alert
@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Start polling regardless of choice (D-06)
         eventTapManager.startPermissionPolling()
-        logger.info("Permission polling started after alert dismissal")
+        logger.notice("Permission polling started after alert dismissal")
     }
 
     // MARK: - Sleep/Wake Recovery
